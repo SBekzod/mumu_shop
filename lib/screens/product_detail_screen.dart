@@ -7,9 +7,6 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final String productId = (ModalRoute.of(context).settings.arguments as String);
-    print('this is id: $productId');
-
-    // ...
 
     return Scaffold(
       appBar: AppBar(
