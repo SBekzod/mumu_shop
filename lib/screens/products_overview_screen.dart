@@ -54,8 +54,8 @@ class ProductsOverviewScreen extends StatelessWidget {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 3 / 2,
-              crossAxisSpacing: 90,
-              mainAxisExtent: 90),
+              crossAxisSpacing: 10,
+              mainAxisExtent: 200),
         ));
   }
 }
