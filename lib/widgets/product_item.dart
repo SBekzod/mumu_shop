@@ -31,7 +31,7 @@ class ProductItem extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.favorite),
             onPressed: () {
-              return null;
+              print('favorite pressed');
             },
             color: Theme.of(context).accentColor,
           ),
@@ -41,7 +41,7 @@ class ProductItem extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart_rounded),
-            onPressed: () => null,
+            onPressed: () => print('shopping-cart pressed'),
             color: Theme.of(context).accentColor,
           ),
         ),
