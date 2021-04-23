@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_complete_guide/screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
   final String id;
@@ -15,11 +16,10 @@ class ProductItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
-          onDoubleTap: () {
-            print('Double tapped');
-          },
           onTap: () {
-            print('You taped the picture');
+            print('Once tapped');
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => ProductDetailScreen(this.title)));
           },
           child: Image.network(
             this.imageUrl,
