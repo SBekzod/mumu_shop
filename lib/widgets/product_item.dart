@@ -18,8 +18,10 @@ class ProductItem extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             print('Once tapped');
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => ProductDetailScreen(this.title)));
+            Navigator.of(context).pushNamed(
+              ProductDetailScreen.routeName,
+              arguments: this.id,
+            );
           },
           child: Image.network(
             this.imageUrl,
