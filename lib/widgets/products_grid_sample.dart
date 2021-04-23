@@ -4,10 +4,9 @@ import '../providers/products.dart';
 import './product_item.dart';
 
 class ProductsGridSample extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    // listen Notifier Provider(NP)
+    // Listen Notifier Provider(LNP)
     final productsDate = Provider.of<Products>(context);
     final products = productsDate.items;
 
