@@ -11,8 +11,21 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(borderRadius: BorderRadius.circular(10),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
       child: GridTile(
+        child: GestureDetector(
+          onDoubleTap: () {
+            print('Double tapped');
+          },
+          onTap: () {
+            print('You taped the picture');
+          },
+          child: Image.network(
+            this.imageUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: IconButton(
@@ -31,10 +44,6 @@ class ProductItem extends StatelessWidget {
             onPressed: () => null,
             color: Theme.of(context).accentColor,
           ),
-        ),
-        child: Image.network(
-          this.imageUrl,
-          fit: BoxFit.cover,
         ),
       ),
     );
