@@ -4,7 +4,6 @@ import '../screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     Product targetProduct = Provider.of<Product>(context);
@@ -28,8 +27,11 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: IconButton(
-            icon: Icon(Icons.favorite),
+            icon: targetProduct.getFavoriteStatus == true
+                ? Icon(Icons.favorite)
+                : Icon(Icons.favorite_border),
             onPressed: () {
+              targetProduct.toggleFavoriteStatus();
               print('favorite pressed');
             },
             color: Theme.of(context).accentColor,
