@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import '../providers/product.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
 
@@ -11,7 +11,7 @@ class ProductDetailScreen extends StatelessWidget {
     final String productId =
         (ModalRoute.of(context).settings.arguments as String);
 
-    final productsDate = Provider.of<Products>(context);
+    final productsDate = Provider.of<Products>(context, listen: false);
     Product targetProduct;
 
     for(int i=0; i<productsDate.items.length; i++) {
