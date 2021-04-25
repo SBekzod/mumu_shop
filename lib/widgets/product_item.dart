@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Listen Notifier Provider(LNP)
     Product targetProduct = Provider.of<Product>(context);
 
     return ClipRRect(
