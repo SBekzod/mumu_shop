@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 import '../widgets/products_grid_sample.dart';
 
-class ProductsOverviewScreen extends StatelessWidget {
+enum FilterOptions {
+  Favorites,
+  All,
+}
+
+class ProductsOverviewScreen extends StatefulWidget {
+  @override
+  _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
+}
+
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+  var _showOnlyFavorites = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,24 +21,41 @@ class ProductsOverviewScreen extends StatelessWidget {
         title: Text('MyShop'),
         actions: <Widget>[
           PopupMenuButton(
-            onSelected: (int selectedValue) {
-              print(selectedValue);
+            onSelected: (FilterOptions selectedValue) {
+              print('Selected value: $selectedValue');
+              if (selectedValue == FilterOptions.Favorites) {
+                setState(() {
+                  this._showOnlyFavorites = true;
+                });
+              } else {
+                setState(() {
+                  this._showOnlyFavorites = false;
+                });
+              }
             },
             icon: Icon(Icons.more_vert),
-            itemBuilder: (ele) => [
+            itemBuilder: (_) => [
               PopupMenuItem(
-                child: Text('Only favorites', textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 20),),
-                value: 0,
+                child: Text(
+                  'Only favorites',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+                value: FilterOptions.Favorites,
               ),
               PopupMenuItem(
-                child: Text('Show all', textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 20),),
-                value: 1,
+                child: Text(
+                  'Show all',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+                value: FilterOptions.All,
               )
             ],
           )
         ],
       ),
-      body: ProductsGridSample(),
+      body: ProductsGridSample(this._showOnlyFavorites),
     );
   }
 }

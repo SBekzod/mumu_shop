@@ -41,8 +41,19 @@ class Products with ChangeNotifier {
     return _items;
   }
 
+  List<Product> get favoriteItems {
+    List<Product> favorites = [];
+    for (int i = 0; i < _items.length; i++) {
+      if (_items[i].getFavoriteStatus == true) {
+        favorites.add(_items[i]);
+      }
+    }
+    return favorites;
+  }
+
   void addProduct() {
     // _items.add(value);
     notifyListeners();
   }
+
 }

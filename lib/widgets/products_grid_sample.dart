@@ -4,11 +4,15 @@ import '../providers/products.dart';
 import './product_item.dart';
 
 class ProductsGridSample extends StatelessWidget {
+  final bool showFavorites;
+
+  ProductsGridSample(this.showFavorites);
+
   @override
   Widget build(BuildContext context) {
     // Listen Notifier Provider(LNP)
     final productsDate = Provider.of<Products>(context);
-    final products = productsDate.items;
+    final products = (showFavorites == true) ? productsDate.favoriteItems : productsDate.items;
 
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
