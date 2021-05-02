@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../providers/cart.dart';
 import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // Listen Notifier Provider(LNP)
     Product targetProduct = Provider.of<Product>(context);
+    final cart = Provider.of<Cart>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -43,7 +45,11 @@ class ProductItem extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart_rounded),
-            onPressed: () => print('shopping-cart pressed'),
+            onPressed: () {
+              print('the product is added successfully');
+              cart.addCartItem(
+                  targetProduct.id, targetProduct.price, targetProduct.title);
+            },
             color: Theme.of(context).accentColor,
           ),
         ),

@@ -22,13 +22,13 @@ class Cart with ChangeNotifier {
 
   void addCartItem(String productId, double price, String title) {
     if (_items.containsKey(productId)) {
-      _items.update(
-          productId,
-          (target) => CartItem(
-              id: target.id,
-              price: target.price,
-              quantity: target.quantity + 1,
-              title: target.title));
+      _items.update(productId, (target) {
+        return CartItem(
+            id: target.id,
+            price: target.price,
+            quantity: target.quantity + 1,
+            title: target.title);
+      });
     } else {
       _items[productId] = CartItem(
           id: DateTime.now().toString(),
@@ -36,5 +36,11 @@ class Cart with ChangeNotifier {
           quantity: 1,
           title: title);
     }
+    notifyListeners();
   }
+
+  int get productTypeQuantityOnCart {
+    return _items.length;
+  }
+
 }
