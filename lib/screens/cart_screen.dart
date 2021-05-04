@@ -29,7 +29,7 @@ class CartScreen extends StatelessWidget {
                     'Total:',
                     style: TextStyle(fontSize: 20),
                   ),
-                  SizedBox(width: 10),
+                  Spacer(),
                   Chip(
                     backgroundColor: Theme.of(context).primaryColor,
                     label: Text(
@@ -39,6 +39,15 @@ class CartScreen extends StatelessWidget {
                               .primaryTextTheme
                               .headline6
                               .color),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      print('order now button is pressed');
+                    },
+                    child: Text(
+                      'ORDER NOW',
+                      style: TextStyle(fontSize: 20),
                     ),
                   )
                 ],
