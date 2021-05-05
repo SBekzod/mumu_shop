@@ -9,7 +9,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String arg = (ModalRoute.of(context).settings.arguments as String);
-    print('This is an argument: $arg');
+    print('arg: $arg');
 
     Cart cart = Provider.of<Cart>(context);
     var list = cart.items.values.toList();
@@ -49,7 +49,7 @@ class CartScreen extends StatelessWidget {
                     },
                     child: Text(
                       'ORDER NOW',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 16),
                     ),
                   )
                 ],
@@ -67,6 +67,7 @@ class CartScreen extends StatelessWidget {
                 list[i].price,
                 list[i].quantity,
                 list[i].title,
+                cart.items.keys.toList()[i],
               ),
             ),
           ),

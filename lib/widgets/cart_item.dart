@@ -7,23 +7,40 @@ class CartItem extends StatelessWidget {
   final double price;
   final int quantity;
   final String title;
+  final String productId;
 
   CartItem(
     this.id,
     this.price,
     this.quantity,
     this.title,
+    this.productId,
   );
 
   @override
   Widget build(BuildContext context) {
-    Cart cart = Provider.of<Cart>(context);
-    return GestureDetector(
-       onDoubleTap: () {
-         print('2 x Pressed');
-         print('ProductID ${this.id}');
-         cart.deleteCartItem(this.id);
-       },
+    Cart cart = Provider.of<Cart>(context, listen: false);
+    return Dismissible(
+      onDismissed: (dismissed) {
+        print('dismissed to delete productId from cart: ${this.productId}');
+        cart.deleteCartItem(this.productId);
+      },
+      key: ValueKey(this.id),
+      direction: DismissDirection.endToStart,
+      background: Container(
+        color: Theme.of(context).errorColor,
+        child: Icon(
+          Icons.delete,
+          size: 40,
+          color: Colors.white,
+        ),
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 20),
+        margin: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 5,
+        ),
+      ),
       child: Card(
         margin: EdgeInsets.symmetric(
           horizontal: 15,
@@ -44,8 +61,12 @@ class CartItem extends StatelessWidget {
               ),
             ),
             title: Text(this.title),
-            subtitle: Text('Total \$${this.price * this.quantity}'),
-            trailing: Text('$quantity x'),
+            subtitle: Text(
+              'Total \$${this.price * this.quantity}',
+            ),
+            trailing: Text(
+              '$quantity x',
+            ),
           ),
         ),
       ),

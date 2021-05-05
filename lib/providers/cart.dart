@@ -39,18 +39,12 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteCartItem(String cartItemID) {
-    String productId;
-    _items.forEach((String key, CartItem value) {
-      if (value.id == cartItemID) {
-        productId = key;
-      }
-    });
+  void deleteCartItem(String productId) {
     if (_items.containsKey(productId)) {
       _items.remove(productId);
       notifyListeners();
     } else {
-      print('PLEASE RECHECK THE LOGIC');
+      print('Error: the productId is not on cart');
     }
   }
 

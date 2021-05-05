@@ -62,10 +62,10 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           Badge(
             child: IconButton(
               onPressed: () {
-                print('going to cart');
+                print('nav => going to cart');
                 Navigator.of(context).pushNamed(
                   CartScreen.routeName,
-                  arguments: 'hello',
+                  arguments: 'hello cart',
                 );
               },
               icon: Icon(
