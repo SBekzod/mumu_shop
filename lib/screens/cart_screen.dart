@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../providers/cart.dart';
+import 'package:flutter_complete_guide/widgets/cart_item.dart' as aimed;
+import '../providers/cart.dart' show Cart;
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class CartScreen extends StatelessWidget {
     print('This is an argument: $arg');
 
     Cart cart = Provider.of<Cart>(context);
+    var list = cart.items.values.toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +62,12 @@ class CartScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemCount: cart.productTypeQuantityOnCart,
-              itemBuilder: (ctx, i) => Text('$i'),
+              itemBuilder: (ctx, i) => aimed.CartItem(
+                list[i].id,
+                list[i].price,
+                list[i].quantity,
+                list[i].title,
+              ),
             ),
           ),
         ],
