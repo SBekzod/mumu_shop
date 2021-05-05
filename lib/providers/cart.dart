@@ -39,6 +39,21 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteCartItem(String cartItemID) {
+    String productId;
+    _items.forEach((String key, CartItem value) {
+      if (value.id == cartItemID) {
+        productId = key;
+      }
+    });
+    if (_items.containsKey(productId)) {
+      _items.remove(productId);
+      notifyListeners();
+    } else {
+      print('PLEASE RECHECK THE LOGIC');
+    }
+  }
+
   double get totalAmount {
     double total = 0;
     _items.forEach((key, value) {
