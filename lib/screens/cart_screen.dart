@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/screens/orders_screen.dart';
 import '../providers/orders.dart';
 import 'package:flutter_complete_guide/widgets/cart_item.dart' as aimed;
 import '../providers/cart.dart' show Cart;
@@ -51,6 +52,12 @@ class CartScreen extends StatelessWidget {
                       print('butt: order button is pressed');
                       orders.addOrder(cart.allCartProducts, cart.totalAmount);
                       cart.clearCart();
+
+                      print('nav => going to myOrders');
+                      Navigator.of(context).pushNamed(
+                        OrdersScreen.routeName,
+                        arguments: 'hello myOrders',
+                      );
                     },
                     child: Text(
                       'ORDER NOW',
