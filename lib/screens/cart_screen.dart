@@ -50,9 +50,10 @@ class CartScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       print('butt: order button is pressed');
-                      orders.addOrder(cart.allCartProducts, cart.totalAmount);
-                      cart.clearCart();
-
+                      if(cart.allCartProducts.isNotEmpty) {
+                        orders.addOrder(cart.allCartProducts, cart.totalAmount);
+                        cart.clearCart();
+                      }
                       print('nav => going to myOrders');
                       Navigator.of(context).pushNamed(
                         OrdersScreen.routeName,
