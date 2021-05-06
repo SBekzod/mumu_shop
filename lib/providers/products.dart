@@ -88,4 +88,16 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
+  Product findByProductId(String productId) {
+    var product;
+    _items.forEach((element) {
+      if(element.id == productId) {
+        product = element;
+      }
+    });
+    return product;
+  }
+
+
+
 }
