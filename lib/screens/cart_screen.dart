@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../providers/orders.dart';
 import 'package:flutter_complete_guide/widgets/cart_item.dart' as aimed;
 import '../providers/cart.dart' show Cart;
 import 'package:provider/provider.dart';
@@ -11,8 +12,10 @@ class CartScreen extends StatelessWidget {
     final String arg = (ModalRoute.of(context).settings.arguments as String);
     print('arg: $arg');
 
-    Cart cart = Provider.of<Cart>(context);
+    Cart cart = Provider.of<Cart>(context, listen: false);
     var list = cart.items.values.toList();
+
+    Orders orders = Provider.of<Orders>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +48,9 @@ class CartScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      print('order now button is pressed');
+                      print('butt: order button is pressed');
+                      orders.addOrder(cart.allCartProducts, cart.totalAmount);
+                      cart.clearCart();
                     },
                     child: Text(
                       'ORDER NOW',

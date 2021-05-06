@@ -59,4 +59,15 @@ class Cart with ChangeNotifier {
   int get productTypeQuantityOnCart {
     return _items.length;
   }
+
+  void clearCart() {
+    _items = {};
+    notifyListeners();
+  }
+
+  List<CartItem> get allCartProducts {
+    return _items.values.toList();
+  }
+
+
 }
