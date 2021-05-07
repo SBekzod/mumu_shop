@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/user_products_screen.dart';
 import '../screens/orders_screen.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -28,6 +29,17 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed(
                 OrdersScreen.routeName,
                 arguments: 'hello my orders',
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.mode_edit),
+            title: Text('Managed Products'),
+            onTap: () {
+              print('dr.butt: go managed products was pressed');
+              Navigator.of(context).pushNamed(
+                UserProductsScreen.routeName,
+                arguments: 'hello managed products',
               );
             },
           )
