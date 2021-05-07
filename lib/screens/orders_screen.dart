@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/app_drawer.dart';
 import '../providers/orders.dart';
 import '../widgets/order_item.dart' as aimed;
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class OrdersScreen extends StatelessWidget {
         itemCount: orders.ordersData.length,
         itemBuilder: (ctx, i) => aimed.OrderItem(orders.ordersData[i]),
       ),
+      drawer: AppDrawer(),
     );
   }
 }

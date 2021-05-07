@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../providers/product.dart';
+import '../widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
 
@@ -49,6 +49,7 @@ class ProductDetailScreen extends StatelessWidget {
           ],
         ),
       ),
+      drawer: AppDrawer(),
     );
   }
 }
