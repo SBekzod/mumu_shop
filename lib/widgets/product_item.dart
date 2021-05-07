@@ -49,7 +49,23 @@ class ProductItem extends StatelessWidget {
               print('the product is added successfully');
               cart.addCartItem(
                   targetProduct.id, targetProduct.price, targetProduct.title);
-              // Scaffold.of(context).openDrawer();
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'ADDED ITEM TO CART',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  duration: Duration(seconds: 2),
+                  action: SnackBarAction(
+                    label: 'UNDO',
+                    onPressed: () {
+                      print('snack: pressed undo action');
+                      cart.removeSingleItem(targetProduct.id);
+                    },
+                  ),
+                ),
+              );
             },
             color: Theme.of(context).accentColor,
           ),
