@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../providers/cart.dart';
 import '../providers/product.dart';
@@ -22,10 +24,12 @@ class ProductItem extends StatelessWidget {
               arguments: targetProduct.id,
             );
           },
-          child: Image.network(
-            targetProduct.imageUrl,
-            fit: BoxFit.cover,
-          ),
+          child: (targetProduct.imageUrl != "none")
+              ? Image.network(
+                  targetProduct.imageUrl,
+                  fit: BoxFit.cover,
+                )
+              : Image.asset('assets/pictures/book.jpg'),
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,

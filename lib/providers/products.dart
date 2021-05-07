@@ -9,7 +9,7 @@ class Products with ChangeNotifier {
       description: 'Prepare yourself for life.',
       price: 9.99,
       imageUrl:
-      'https://d2r68eeixpqexd.cloudfront.net/41fd2ced63aa8d47a3142fa4cd46849b.jpg',
+          'https://d2r68eeixpqexd.cloudfront.net/41fd2ced63aa8d47a3142fa4cd46849b.jpg',
     ),
     Product(
       id: 'p2',
@@ -17,7 +17,7 @@ class Products with ChangeNotifier {
       description: 'Prepare yourself for game.',
       price: 949.99,
       imageUrl:
-      'https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/Untitled1578.png',
+          'https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/Untitled1578.png',
     ),
     Product(
       id: 'p3',
@@ -25,7 +25,7 @@ class Products with ChangeNotifier {
       description: 'Prepare yourself for sports.',
       price: 5.00,
       imageUrl:
-      'https://soccerballworld.com/wp-content/uploads/2020/04/alphabet-word-images-1295331_640.png',
+          'https://soccerballworld.com/wp-content/uploads/2020/04/alphabet-word-images-1295331_640.png',
     ),
     Product(
       id: 'p4',
@@ -33,7 +33,7 @@ class Products with ChangeNotifier {
       description: 'Prepare yourself for life.',
       price: 56000.00,
       imageUrl:
-      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2022-tesla-cyber-truck-mmp-1-1579127142.jpg',
+          'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2022-tesla-cyber-truck-mmp-1-1579127142.jpg',
     ),
     Product(
       id: 'p5',
@@ -67,6 +67,20 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
+    Product(
+      id: 'p9',
+      title: 'Bestseller book',
+      description: 'Prepare yourself to Black and White.',
+      price: 1000.00,
+      imageUrl: 'none',
+    ),
+    Product(
+      id: 'p10',
+      title: 'Tickets',
+      description: 'Prepare yourself to travel to USA.',
+      price: 2500.00,
+      imageUrl: 'https://lp-cms-production.imgix.net/2019-06/373321b4ae427b2d482bc246a4e04476-usa.jpg',
+    ),
   ];
 
   List<Product> get items {
@@ -91,13 +105,10 @@ class Products with ChangeNotifier {
   Product findByProductId(String productId) {
     var product;
     _items.forEach((element) {
-      if(element.id == productId) {
+      if (element.id == productId) {
         product = element;
       }
     });
     return product;
   }
-
-
-
 }
