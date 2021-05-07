@@ -49,6 +49,7 @@ class ProductItem extends StatelessWidget {
               print('the product is added successfully');
               cart.addCartItem(
                   targetProduct.id, targetProduct.price, targetProduct.title);
+              // Scaffold.of(context).openDrawer();
             },
             color: Theme.of(context).accentColor,
           ),
