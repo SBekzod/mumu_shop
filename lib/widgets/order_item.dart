@@ -55,7 +55,7 @@ class _OrderItemState extends State<OrderItem> {
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     Text(
-                      '${widget.orderItem.cartProducts[i].quantity} x \$${widget.orderItem.cartProducts[i].price}',
+                      '${widget.orderItem.cartProducts[i].quantity} x \$${widget.orderItem.cartProducts[i].price.toStringAsFixed(2)}',
                       style: TextStyle(
                           fontSize: 20, color: Theme.of(context).primaryColor),
                     )
