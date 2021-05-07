@@ -60,21 +60,24 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               )
             ],
           ),
-          Badge(
-            child: IconButton(
-              onPressed: () {
-                print('nav => going to cart');
-                Navigator.of(context).pushNamed(
-                  CartScreen.routeName,
-                  arguments: 'hello cart',
-                );
-              },
-              icon: Icon(
-                Icons.add_shopping_cart,
-                color: Colors.white,
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            child: Badge(
+              child: IconButton(
+                onPressed: () {
+                  print('nav => going to cart');
+                  Navigator.of(context).pushNamed(
+                    CartScreen.routeName,
+                    arguments: 'hello cart',
+                  );
+                },
+                icon: Icon(
+                  Icons.add_shopping_cart,
+                  color: Colors.white,
+                ),
               ),
+              value: cart.productTypeQuantityOnCart.toString(),
             ),
-            value: cart.productTypeQuantityOnCart.toString(),
           )
         ],
       ),
