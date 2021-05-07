@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/screens/orders_screen.dart';
+import '../screens/orders_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -21,7 +21,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.request_quote_outlined),
+            leading: Icon(Icons.payment),
             title: Text('Go My Orders'),
             onTap: () {
               print('dr.butt: go my orders was pressed');
