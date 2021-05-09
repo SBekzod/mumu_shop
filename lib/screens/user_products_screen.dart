@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/products.dart';
+import 'package:flutter_complete_guide/widgets/user_product_item.dart';
+import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 
 class UserProductsScreen extends StatelessWidget {
@@ -8,17 +11,35 @@ class UserProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final String arg = (ModalRoute.of(context).settings.arguments as String);
     print('arg: $arg');
+    Products products = Provider.of<Products>(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Added Products'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                print('butt: add button was pressed');
+              })
+        ],
       ),
       drawer: AppDrawer(),
-      body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (_, i) {
-            return Text('TEST');
-          }),
+      body: Padding(
+        padding: EdgeInsets.all(8),
+        child: ListView.builder(
+            itemCount: products.items.length,
+            itemBuilder: (_, i) {
+              return Column(children: <Widget>[
+                UserProductItem(
+                  title: products.items[i].title,
+                  imageUrl: products.items[i].imageUrl,
+                  productId: products.items[i].id,
+                ),
+                Divider(),
+              ]);
+            }),
+      ),
     );
   }
 }

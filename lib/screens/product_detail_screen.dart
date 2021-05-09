@@ -29,7 +29,7 @@ class ProductDetailScreen extends StatelessWidget {
                       loadedProduct.imageUrl,
                       fit: BoxFit.cover,
                     )
-                  : Image(image: AssetImage('assets/pictures/book.jpg')),
+                  : Image(image: AssetImage('assets/pictures/$productId.jpg')),
             ),
             SizedBox(
               height: 10,

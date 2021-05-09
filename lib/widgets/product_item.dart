@@ -29,7 +29,7 @@ class ProductItem extends StatelessWidget {
                   targetProduct.imageUrl,
                   fit: BoxFit.cover,
                 )
-              : Image.asset('assets/pictures/book.jpg'),
+              : Image.asset('assets/pictures/${targetProduct.id}.jpg'),
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,

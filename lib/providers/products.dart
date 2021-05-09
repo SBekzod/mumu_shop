@@ -96,7 +96,6 @@ class Products with ChangeNotifier {
     }
     return favorites;
   }
-
   void addProduct() {
     // _items.add(value);
     notifyListeners();
