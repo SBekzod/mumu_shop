@@ -9,6 +9,26 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
+  final _imageURLController = TextEditingController();
+  final _imageURLFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    _imageURLFocusNode.addListener(_updateState);
+    super.initState();
+  }
+
+  void _updateState() {
+    if (!_imageURLFocusNode.hasFocus) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _imageURLController.dispose();
+    _imageURLFocusNode.removeListener(_updateState);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final String arg = (ModalRoute.of(context).settings.arguments as String);
@@ -37,6 +57,35 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 8, right: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: _imageURLController.text.isEmpty
+                        ? Text('Enter an URL')
+                        : FittedBox(
+                            child: Image.network(
+                              _imageURLController.text,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(labelText: 'Image URL'),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      controller: _imageURLController,
+                      focusNode: _imageURLFocusNode,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
