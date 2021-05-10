@@ -53,6 +53,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
     print('imageUrl values: ${_editedProduct.imageUrl}');
   }
 
+  String validateTitle(value) {
+    var size = value.split('').length;
+    print(size);
+    if (value.isEmpty) {
+      return 'the value should not be empty';
+    } else if (size < 5) {
+      return 'the title should be at least four letters length';
+    } else if (size > 15) {
+      return 'the title should not be more than fourteen letters length';
+    } else
+      return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final String arg = (ModalRoute.of(context).settings.arguments as String);
@@ -71,12 +84,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          autovalidateMode: AutovalidateMode.always,
           key: _form,
           child: ListView(
             children: <Widget>[
               TextFormField(
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
+                validator: (value) {
+                  return this.validateTitle(value);
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: null,
