@@ -32,6 +32,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
+  void _saveForm() {
+    print('butt: save form was submitted');
+  }
+
   @override
   Widget build(BuildContext context) {
     final String arg = (ModalRoute.of(context).settings.arguments as String);
@@ -40,6 +44,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Product'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _saveForm,
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -80,14 +90,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             ),
                           ),
                   ),
+                  // Image input result before submitting part 2
                   Expanded(
-                    // Image input result before submitting part 2
-                  child: TextFormField(
+                    child: TextFormField(
                       decoration: InputDecoration(labelText: 'Image URL'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
                       controller: _imageURLController,
                       focusNode: _imageURLFocusNode,
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
                     ),
                   ),
                 ],
