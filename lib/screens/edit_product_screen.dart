@@ -36,13 +36,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void dispose() {
     _imageURLController.dispose();
-    // removing listener for FocusNode
+    // removing listener for FocusNode when page is closed
     _imageURLFocusNode.removeListener(_updateStateForURL);
     super.dispose();
   }
 
   void _saveForm() {
     print('butt: save form was submitted');
+    bool isValid = _form.currentState.validate();
+    if(!isValid) {
+      print('Not valid');
+      return;
+    }
     // running on save method within each input types
     _form.currentState.save();
     // checking the value after save
@@ -55,7 +60,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   String validateTitle(value) {
     var size = value.split('').length;
-    print(size);
     if (value.isEmpty) {
       return 'the value should not be empty';
     } else if (size < 5) {
