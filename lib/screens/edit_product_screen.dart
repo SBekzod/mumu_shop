@@ -14,18 +14,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   @override
   void initState() {
-    _imageURLFocusNode.addListener(_updateState);
+    // add listener for FocusNode when the user focus is changed for the targeted input
+    _imageURLFocusNode.addListener(_updateStateForURL);
     super.initState();
   }
 
-  void _updateState() {
+  void _updateStateForURL() {
+    print('FNL: listener on process');
     if (!_imageURLFocusNode.hasFocus) setState(() {});
   }
 
   @override
   void dispose() {
     _imageURLController.dispose();
-    _imageURLFocusNode.removeListener(_updateState);
+    // removing listener for FocusNode
+    _imageURLFocusNode.removeListener(_updateStateForURL);
     super.dispose();
   }
 
