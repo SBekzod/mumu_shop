@@ -70,6 +70,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     margin: EdgeInsets.only(top: 8, right: 10),
                     decoration: BoxDecoration(
                         border: Border.all(width: 1, color: Colors.grey)),
+                    // Image input result before submitting part 1
                     child: _imageURLController.text.isEmpty
                         ? Text('Enter an URL')
                         : FittedBox(
@@ -80,7 +81,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    // Image input result before submitting part 2
+                  child: TextFormField(
                       decoration: InputDecoration(labelText: 'Image URL'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
