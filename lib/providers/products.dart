@@ -79,7 +79,8 @@ class Products with ChangeNotifier {
       title: 'Tickets',
       description: 'Prepare yourself to travel to USA.',
       price: 2500.00,
-      imageUrl: 'https://lp-cms-production.imgix.net/2019-06/373321b4ae427b2d482bc246a4e04476-usa.jpg',
+      imageUrl:
+          'https://lp-cms-production.imgix.net/2019-06/373321b4ae427b2d482bc246a4e04476-usa.jpg',
     ),
   ];
 
@@ -96,8 +97,15 @@ class Products with ChangeNotifier {
     }
     return favorites;
   }
-  void addProduct() {
-    // _items.add(value);
+
+  void addProduct(Product product) {
+    Product newProduct = Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl);
+    _items.add(newProduct);
     notifyListeners();
   }
 

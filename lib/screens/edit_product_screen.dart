@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_complete_guide/providers/product.dart';
+import '../providers/product.dart';
+import '../providers/products.dart';
+import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -30,7 +32,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateStateForURL() {
     print('FNL: listener on process');
-    if (!_imageURLFocusNode.hasFocus) setState(() {});
+    if (!_imageURLFocusNode.hasFocus) {
+      if (!_imageURLController.text.startsWith('http') &&
+          !_imageURLController.text.startsWith('https'))
+        return;
+      else
+        setState(() {});
+    }
   }
 
   @override
@@ -50,12 +58,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     // running on save method within each input types
     _form.currentState.save();
-    // checking the value after save
-    print('id values: ${_editedProduct.id}');
-    print('title values: ${_editedProduct.title}');
-    print('price values: ${_editedProduct.price}');
-    print('description values: ${_editedProduct.description}');
-    print('imageUrl values: ${_editedProduct.imageUrl}');
+    // saving on Products obj
+    Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    Navigator.of(context).pop();
   }
 
   String validateTitle(value) {
@@ -192,7 +197,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'please enter url';
+                          return 'please enter url address';
+                        } else if (!value.startsWith('http') &&
+                            !value.startsWith('http')) {
+                          return 'please enter valid url';
                         } else {
                           return null;
                         }
