@@ -24,7 +24,7 @@ class UserProductsScreen extends StatelessWidget {
                 print('butt: add button was pressed');
                 Navigator.of(context).pushNamed(
                   EditProductScreen.routeName,
-                  arguments: 'Hello edit screen',
+                  arguments: 'none',
                 );
               })
         ],

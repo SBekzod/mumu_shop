@@ -25,7 +25,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   @override
   void initState() {
-    // add listener for FocusNode when the user focus is changed for the targeted input
     _imageURLFocusNode.addListener(_updateStateForURL);
     super.initState();
   }
@@ -44,7 +43,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void dispose() {
     _imageURLController.dispose();
-    // removing listener for FocusNode when page is closed
     _imageURLFocusNode.removeListener(_updateStateForURL);
     super.dispose();
   }
@@ -91,6 +89,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     final String arg = (ModalRoute.of(context).settings.arguments as String);
     print('arg: $arg');
+    if (arg != 'none') {
+      _editedProduct = Provider.of<Products>(context).findByProductId(arg);
+      print('This is ID: ${_editedProduct.id}');
+      print('This is PRICE: ${_editedProduct.price}');
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -109,6 +112,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                initialValue: _editedProduct.title,
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 validator: (value) {
@@ -116,7 +120,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
-                    id: null,
+                    id: _editedProduct.id,
                     title: value,
                     price: _editedProduct.price,
                     description: _editedProduct.description,
@@ -134,7 +138,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
-                    id: null,
+                    id: _editedProduct.id,
                     title: _editedProduct.title,
                     price: double.parse(value),
                     description: _editedProduct.description,
@@ -143,6 +147,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _editedProduct.description,
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
@@ -157,7 +162,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
-                    id: null,
+                    id: _editedProduct.id,
                     title: _editedProduct.title,
                     price: _editedProduct.price,
                     description: value,
@@ -192,9 +197,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       textInputAction: TextInputAction.done,
                       controller: _imageURLController,
                       focusNode: _imageURLFocusNode,
-                      onFieldSubmitted: (_) {
-                        _saveForm();
-                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'please enter url address';
@@ -205,9 +207,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           return null;
                         }
                       },
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
                       onSaved: (value) {
                         _editedProduct = Product(
-                          id: null,
+                          id: _editedProduct.id,
                           title: _editedProduct.title,
                           price: _editedProduct.price,
                           description: _editedProduct.description,
