@@ -44,7 +44,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void _saveForm() {
     print('butt: save form was submitted');
     bool isValid = _form.currentState.validate();
-    if(!isValid) {
+    if (!isValid) {
       print('Not valid');
       return;
     }
@@ -62,12 +62,24 @@ class _EditProductScreenState extends State<EditProductScreen> {
     var size = value.split('').length;
     if (value.isEmpty) {
       return 'the value should not be empty';
-    } else if (size < 5) {
+    } else if (size < 4) {
       return 'the title should be at least four letters length';
     } else if (size > 15) {
       return 'the title should not be more than fourteen letters length';
     } else
       return null;
+  }
+
+  String validatePrice(value) {
+    if (value.isEmpty) {
+      return 'please enter the price amount';
+    } else if (double.tryParse(value) == null) {
+      return 'please enter number';
+    } else if (double.parse(value) <= 0) {
+      return 'please enter amount more than zero';
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -88,7 +100,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          autovalidateMode: AutovalidateMode.always,
           key: _form,
           child: ListView(
             children: <Widget>[
@@ -113,6 +124,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 maxLength: 5,
+                validator: (value) {
+                  return this.validatePrice(value);
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: null,
@@ -127,6 +141,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'please enter the description';
+                  } else if (value.length < 10) {
+                    return 'the description should have at least 10 letter length';
+                  } else {
+                    return null;
+                  }
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: null,
@@ -166,6 +189,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       focusNode: _imageURLFocusNode,
                       onFieldSubmitted: (_) {
                         _saveForm();
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'please enter url';
+                        } else {
+                          return null;
+                        }
                       },
                       onSaved: (value) {
                         _editedProduct = Product(
