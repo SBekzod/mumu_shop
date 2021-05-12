@@ -37,6 +37,37 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _imageURLController.dispose();
+    _imageURLFocusNode.removeListener(_updateStateForURL);
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (initialOpen) {
+      final String arg = (ModalRoute.of(context).settings.arguments as String);
+      print('arg: $arg');
+      if (arg != 'none') {
+        _editedProduct = Provider.of<Products>(context).findByProductId(arg);
+        print('This is ID: ${_editedProduct.id}');
+        print('This is PRICE: ${_editedProduct.price}');
+      }
+      _initialRendering = {
+        "title": _editedProduct.title,
+        "price": (_editedProduct.price != 0.0)
+            ? _editedProduct.price.toString()
+            : "",
+        "description": _editedProduct.description,
+        "imageURL": _editedProduct.imageUrl
+      };
+      _imageURLController.text = _initialRendering["imageURL"];
+      super.didChangeDependencies();
+      initialOpen = false;
+    }
+  }
+
   void _updateStateForURL() {
     print('FNL: listener on process');
     if (!_imageURLFocusNode.hasFocus) {
@@ -46,13 +77,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
       else
         setState(() {});
     }
-  }
-
-  @override
-  void dispose() {
-    _imageURLController.dispose();
-    _imageURLFocusNode.removeListener(_updateStateForURL);
-    super.dispose();
   }
 
   // runs only if the onFieldSubmitted is submitted on the targeted input
@@ -131,30 +155,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return 'please enter amount more than zero';
     } else {
       return null;
-    }
-  }
-
-  @override
-  void didChangeDependencies() {
-    if (initialOpen) {
-      final String arg = (ModalRoute.of(context).settings.arguments as String);
-      print('arg: $arg');
-      if (arg != 'none') {
-        _editedProduct = Provider.of<Products>(context).findByProductId(arg);
-        print('This is ID: ${_editedProduct.id}');
-        print('This is PRICE: ${_editedProduct.price}');
-      }
-      _initialRendering = {
-        "title": _editedProduct.title,
-        "price": (_editedProduct.price != 0.0)
-            ? _editedProduct.price.toString()
-            : "",
-        "description": _editedProduct.description,
-        "imageURL": _editedProduct.imageUrl
-      };
-      _imageURLController.text = _initialRendering["imageURL"];
-      super.didChangeDependencies();
-      initialOpen = false;
     }
   }
 

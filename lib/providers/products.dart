@@ -162,9 +162,6 @@ class Products with ChangeNotifier {
     int targetIndex = _items.indexWhere((element) => element.id == id);
     _items[targetIndex] = editedProduct;
     notifyListeners();
-    // old version
-    // _items.removeWhere((element) => element.id == product.id);
-    // _items.add(product);
   }
 
   void deleteProduct(String id) {
