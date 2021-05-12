@@ -99,21 +99,24 @@ class Products with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    if (product.id == null) {
-      // add new product
-      Product newProduct = Product(
-          id: DateTime.now().toString(),
-          title: product.title,
-          description: product.description,
-          price: product.price,
-          imageUrl: product.imageUrl);
-      _items.add(newProduct);
-    } else {
-      // edit the existed product
-      _items.removeWhere((element) => element.id == product.id);
-      _items.add(product);
-    }
+    Product newProduct = Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl);
+    _items.add(newProduct);
     notifyListeners();
+  }
+
+  void editProduct(String id, Product editedProduct) {
+    // edit the existed product
+    int targetIndex = _items.indexWhere((element) => element.id == id);
+    _items[targetIndex] = editedProduct;
+    notifyListeners();
+    // old version
+    // _items.removeWhere((element) => element.id == product.id);
+    // _items.add(product);
   }
 
   void deleteProduct(String id) {

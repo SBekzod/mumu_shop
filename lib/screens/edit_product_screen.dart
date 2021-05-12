@@ -12,7 +12,7 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
-  final _imageURLController = TextEditingController();
+  var _imageURLController = TextEditingController();
   final _imageURLFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   var _editedProduct = Product(
@@ -22,6 +22,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
     description: '',
     imageUrl: '',
   );
+  var _initialRendering = {
+    "title": '',
+    "price": '',
+    "description": '',
+    "imageUrl": '',
+  };
+  bool initialOpen = true;
 
   @override
   void initState() {
@@ -86,15 +93,29 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final String arg = (ModalRoute.of(context).settings.arguments as String);
-    print('arg: $arg');
-    if (arg != 'none') {
-      _editedProduct = Provider.of<Products>(context).findByProductId(arg);
-      print('This is ID: ${_editedProduct.id}');
-      print('This is PRICE: ${_editedProduct.price}');
+  void didChangeDependencies() {
+    if (initialOpen) {
+      final String arg = (ModalRoute.of(context).settings.arguments as String);
+      print('arg: $arg');
+      if (arg != 'none') {
+        _editedProduct = Provider.of<Products>(context).findByProductId(arg);
+        print('This is ID: ${_editedProduct.id}');
+        print('This is PRICE: ${_editedProduct.price}');
+      }
+      _initialRendering = {
+        "title": _editedProduct.title,
+        "price": (_editedProduct.price != 0.0) ? _editedProduct.price.toString() : "",
+        "description": _editedProduct.description,
+        "imageURL": _editedProduct.imageUrl
+      };
+      _imageURLController.text = _initialRendering["imageURL"];
+      super.didChangeDependencies();
+      initialOpen = false;
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Product'),
@@ -112,7 +133,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
-                initialValue: _editedProduct.title,
+                initialValue: _initialRendering["title"],
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 validator: (value) {
@@ -129,6 +150,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initialRendering["price"],
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -147,7 +169,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
-                initialValue: _editedProduct.description,
+                initialValue: _initialRendering["description"],
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
