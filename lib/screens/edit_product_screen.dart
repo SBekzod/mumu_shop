@@ -54,8 +54,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
+  // runs only if the onFieldSubmitted is submitted on the targeted input
   void _saveForm() {
     print('butt: save form was submitted');
+    // running validate method within each input types
     bool isValid = _form.currentState.validate();
     if (!isValid) {
       print('Not valid');
@@ -63,8 +65,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     // running on save method within each input types
     _form.currentState.save();
-    // saving on Products obj
-    Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+
+    if (_editedProduct.id == null) {
+      Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    } else {
+      Provider.of<Products>(context, listen: false)
+          .editProduct(_editedProduct.id, _editedProduct);
+    }
     Navigator.of(context).pop();
   }
 
@@ -104,7 +111,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
       }
       _initialRendering = {
         "title": _editedProduct.title,
-        "price": (_editedProduct.price != 0.0) ? _editedProduct.price.toString() : "",
+        "price": (_editedProduct.price != 0.0)
+            ? _editedProduct.price.toString()
+            : "",
         "description": _editedProduct.description,
         "imageURL": _editedProduct.imageUrl
       };
