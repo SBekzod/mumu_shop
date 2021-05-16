@@ -228,6 +228,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       textInputAction: TextInputAction.done,
                       controller: _imageURLController,
                       focusNode: _imageURLFocusNode,
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'please enter url address';
@@ -237,9 +240,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         } else {
                           return null;
                         }
-                      },
-                      onFieldSubmitted: (_) {
-                        _saveForm();
                       },
                       onSaved: (value) {
                         _editedProduct = Product(
