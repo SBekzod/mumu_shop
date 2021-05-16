@@ -125,8 +125,9 @@ class Products with ChangeNotifier {
           imageUrl: product.imageUrl);
       _items.add(newProduct);
       notifyListeners();
-    }).catchError((onError) {
-      print('ERROR OCCURRED $onError');
+    }).catchError((err) {
+      print('Add product Error: $err');
+      throw err;
     });
   }
 
