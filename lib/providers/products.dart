@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import './product.dart';
 import 'package:http/http.dart' as http;
@@ -100,11 +102,11 @@ class Products with ChangeNotifier {
     return favorites;
   }
 
-  void addProduct(Product product) {
+  Future<Void> addProduct(Product product) {
     // posting request into FB with http packages
     const url =
         'https://flutter-update-1e5f2-default-rtdb.firebaseio.com/products.json';
-    http.post(
+    return http.post(
       url,
       body: json.encode({
         "title": product.title,
@@ -113,9 +115,10 @@ class Products with ChangeNotifier {
         "imageUrl": product.imageUrl
       }),
     ).then((data) {
-      print(json.decode(data.body));
+      print(json.decode(data.body)['name']);
       Product newProduct = Product(
-          id: DateTime.now().toString(),
+          // id: DateTime.now().toString(),
+          id: json.decode(data.body)['name'],
           title: product.title,
           description: product.description,
           price: product.price,
@@ -123,7 +126,7 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       notifyListeners();
     }).catchError((onError) {
-      print(json.decode(onError.toString()));
+      print('ERROR OCCURRED $onError');
     });
   }
 
