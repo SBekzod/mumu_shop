@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './product.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -99,14 +101,30 @@ class Products with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    Product newProduct = Product(
-        id: DateTime.now().toString(),
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        imageUrl: product.imageUrl);
-    _items.add(newProduct);
-    notifyListeners();
+    // posting request into FB with http packages
+    const url =
+        'https://flutter-update-1e5f2-default-rtdb.firebaseio.com/products.json';
+    http.post(
+      url,
+      body: json.encode({
+        "title": product.title,
+        "description": product.description,
+        "price": product.price,
+        "imageUrl": product.imageUrl
+      }),
+    ).then((data) {
+      print(json.decode(data.body));
+      Product newProduct = Product(
+          id: DateTime.now().toString(),
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl);
+      _items.add(newProduct);
+      notifyListeners();
+    }).catchError((onError) {
+      print(json.decode(onError.toString()));
+    });
   }
 
   void editProduct(String id, Product editedProduct) {
