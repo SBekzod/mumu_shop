@@ -56,7 +56,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   // runs only if the onFieldSubmitted is submitted on the targeted input
-  void _saveForm() {
+  void _saveForm() async {
     print('butt: save form was submitted');
     // running validate method within each input types
     bool isValid = _form.currentState.validate();
@@ -71,19 +71,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
     });
 
     if (_editedProduct.id == null) {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .then((_) {
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
         setState(() {
           isLoading = false;
         });
         Navigator.of(context).pop();
-      }).catchError((err) {
+      } catch (err) {
+        print(err);
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('An error occurred!'),
-            content: Text('Something went wrong.'),
+            content: Text('Something went wrong. $err'),
             actions: <Widget>[
               TextButton(
                   onPressed: () {
@@ -96,7 +97,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      });
+      } finally {
+        print('proceeded!');
+      }
     } else {
       Provider.of<Products>(context, listen: false)
           .editProduct(_editedProduct.id, _editedProduct);

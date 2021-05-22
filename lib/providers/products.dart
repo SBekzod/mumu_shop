@@ -102,22 +102,23 @@ class Products with ChangeNotifier {
     return favorites;
   }
 
-  Future<Void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     // posting request into FB with http packages
-    const url =
-        'https://flutter-update-1e5f2-default-rtdb.firebaseio.com/products.json';
-    return http.post(
-      url,
-      body: json.encode({
-        "title": product.title,
-        "description": product.description,
-        "price": product.price,
-        "imageUrl": product.imageUrl
-      }),
-    ).then((data) {
+    try {
+      const url =
+          'https://flutter-update-1e5f2-default-rtdb.firebaseio.com/products.json';
+      var data = await http.post(
+        url,
+        body: json.encode({
+          "title": product.title,
+          "description": product.description,
+          "price": product.price,
+          "imageUrl": product.imageUrl
+        }),
+      );
       print(json.decode(data.body)['name']);
       Product newProduct = Product(
-          // id: DateTime.now().toString(),
+        // id: DateTime.now().toString(),
           id: json.decode(data.body)['name'],
           title: product.title,
           description: product.description,
@@ -125,10 +126,9 @@ class Products with ChangeNotifier {
           imageUrl: product.imageUrl);
       _items.add(newProduct);
       notifyListeners();
-    }).catchError((err) {
-      print('Add product Error: $err');
+    } catch(err) {
       throw err;
-    });
+    }
   }
 
   void editProduct(String id, Product editedProduct) {
