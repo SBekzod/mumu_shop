@@ -159,11 +159,23 @@ class Products with ChangeNotifier {
     }
   }
 
-  void editProduct(String id, Product editedProduct) {
-    // edit the existed product
-    int targetIndex = _items.indexWhere((element) => element.id == id);
-    _items[targetIndex] = editedProduct;
-    notifyListeners();
+  Future<void> editProduct(String id, Product editedProduct) async {
+    // edit existed products on server
+    try {
+      final url = "https://flutter-update-1e5f2-default-rtdb.firebaseio.com/products/$id.json";
+      await http.patch(url, body: json.encode({
+        'description': editedProduct.description,
+        'imageUrl': editedProduct.imageUrl,
+        'price': editedProduct.price,
+        'title': editedProduct.title,
+      }));
+      // edit the existed products locally
+      int targetIndex = _items.indexWhere((element) => element.id == id);
+      _items[targetIndex] = editedProduct;
+      notifyListeners();
+    } catch (err) {
+      throw err;
+    }
   }
 
   Future<void> deleteProduct(String id) async {
