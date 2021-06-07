@@ -151,6 +151,7 @@ class Products with ChangeNotifier {
           description: product.description,
           price: product.price,
           imageUrl: product.imageUrl);
+      // adding products locally
       _items.add(newProduct);
       notifyListeners();
     } catch (err) {
@@ -165,9 +166,17 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteProduct(String id) {
-    _items.removeWhere((element) => element.id == id);
-    notifyListeners();
+  Future<void> deleteProduct(String id) async {
+    try {
+      // delete from server
+      final url = "https://flutter-update-1e5f2-default-rtdb.firebaseio.com/products/$id.json";
+      await http.delete(url);
+      // delete locally
+      _items.removeWhere((element) => element.id == id);
+      notifyListeners();
+    } catch(err) {
+      throw err;
+    }
   }
 
   Product findByProductId(String productId) {
